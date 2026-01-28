@@ -1,0 +1,18 @@
+body { font-family: system-ui, Arial, sans-serif; margin:0; background:#f8fafc; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:#0f172a; color:#fff; }
+.grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; padding:20px; }
+.tile { background:#fff; border-radius:20px; padding:24px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,.08); font-size:24px; cursor:pointer; }
+.tile .icon { font-size:56px; margin-bottom:12px; }
+.tile .title { font-weight:bold; }
+.tile.danger { background:#fee2e2; }
+.card { max-width:360px; margin:60px auto; padding:24px; background:#fff; border-radius:16px; box-shadow:0 10px 24px rgba(0,0,0,.1); }
+label { display:block; margin:12px 0; }
+input { width:100%; padding:10px; font-size:16px; }
+button { padding:10px 14px; font-size:16px; }
+.error { color:#b91c1c; margin-bottom:10px; }
+.panel { position:fixed; left:50%; transform:translateX(-50%); bottom:-70%; width:90%; max-width:480px;
+         background:#fff; border-radius:18px 18px 0 0; box-shadow:0 -10px 24px rgba(0,0,0,.2);
+         padding:18px; transition:bottom .25s ease; }
+.panel.open { bottom:0; }
+@media (max-width:900px) { .grid { grid-template-columns: 1fr; } .tile { font-size:20px; } .tile .icon { font-size:64px; } }
+

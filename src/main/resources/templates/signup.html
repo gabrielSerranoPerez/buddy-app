@@ -1,0 +1,17 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><title>Buddy Sign Up</title>
+<link rel="stylesheet" th:href="@{/css/main.css}"></head>
+<body>
+  <div class="card">
+    <h1>Create Account</h1>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+    <form method="post" th:object="${form}">
+      <label>Username <input th:field="*{username}"></label>
+      <label>Password <input th:field="*{password}" type="password"></label>
+      <button type="submit">Sign up</button>
+    </form>
+    <p><a th:href="@{/login}">Back to login</a></p>
+  </div>
+</body>
+</html>

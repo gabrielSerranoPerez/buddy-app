@@ -1,0 +1,70 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Buddy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Buddy</h1>
+    <a th:href="@{/logout}">Log out</a>
+  </header>
+
+  <main class="grid">
+    <!-- 1) 911 Emergency -->
+    <!-- NOTE: tel:911 launches the dialer on mobile; avoid auto-dialing in browsers -->
+    <a class="tile danger" href="tel:911" onclick="return confirm('Call 911?')">
+      <div class="icon">📞</div>
+      <div class="title">Emergency (911)</div>
+    </a>
+
+    <!-- 2) Call / Video Call -->
+    <div class="tile" onclick="document.getElementById('callPanel').classList.toggle('open')">
+      <div class="icon">📹</div>
+      <div class="title">Call / Video</div>
+    </div>
+
+    <!-- 3) News & Entertainment -->
+    <div class="tile" onclick="document.getElementById('mediaPanel').classList.toggle('open')">
+      <div class="icon">📰</div>
+      <div class="title">News & Entertainment</div>
+    </div>
+  </main>
+
+  <!-- Simple panels -->
+  <section id="callPanel" class="panel">
+    <h2>Contacts</h2>
+    <ul>
+      <li th:each="c : ${contacts}">
+        <span th:text="${c.displayName}">Name</span> —
+        <a th:href="'tel:' + ${c.phoneNumber}">Call</a>
+        <span th:if="${c.videoLink}"> | <a th:href="${c.videoLink}" target="_blank">Video</a></span>
+      </li>
+    </ul>
+    <!-- You can add a small form here to add contacts -->
+  </section>
+
+  <section id="mediaPanel" class="panel">
+    <h2>News & Entertainment</h2>
+    <ul>
+      <li th:each="m : ${medias}">
+        <a th:href="${m.url}" th:text="${m.title}" target="_blank">Link</a>
+      </li>
+    </ul>
+    <!-- You can add a small form here to add media links -->
+  </section>
+
+  <script>
+    // Panels auto-close when tapping outside (optional)
+    document.addEventListener('click', (e) => {
+      const cp = document.getElementById('callPanel');
+      const mp = document.getElementById('mediaPanel');
+      if (!e.target.closest('.tile') && !e.target.closest('.panel')) {
+        cp.classList.remove('open'); mp.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>

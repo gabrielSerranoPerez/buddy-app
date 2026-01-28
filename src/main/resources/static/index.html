@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Buddy – Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { --bg:#f6f7fb; --card:#fff; --ink:#0f172a; --muted:#475569; --danger:#fee2e2; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, Arial, sans-serif; background:var(--bg); color:var(--ink); }
+    header { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:#0f172a; color:#fff; }
+    .brand { margin:0; font-weight:800; letter-spacing:.4px; }
+    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; padding:20px; }
+    .tile { background:var(--card); border-radius:22px; padding:28px 18px; text-align:center;
+            box-shadow:0 10px 24px rgba(0,0,0,.08); font-size:22px; cursor:pointer; user-select:none; }
+    .tile .icon { font-size:62px; margin-bottom:12px; }
+    .tile .title { font-weight:800; }
+    .tile.danger { background:var(--danger); }
+    .muted { color:var(--muted); font-size:14px; margin-top:6px; }
+    .panel { max-width:900px; margin:18px auto; background:#fff; border-radius:18px; padding:16px 18px;
+             box-shadow:0 8px 22px rgba(0,0,0,.08); display:none; }
+    .panel.open { display:block; }
+    .panel h2 { margin:6px 0 12px 0; }
+    .list { list-style:none; padding:0; margin:0; }
+    .list li { padding:10px 0; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
+    .btn { display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid #cbd5e1; text-decoration:none; color:#0f172a; }
+    .btn.primary { background:#e2e8f0; }
+    footer { text-align:center; color:var(--muted); padding:14px 10px 26px; }
+    @media (max-width: 920px) { .grid { grid-template-columns: 1fr; } .tile { font-size:20px; } .tile .icon { font-size:70px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="brand">Buddy</h1>
+    <nav>
+      <a class="btn" href="/login">Login</a>
+      <a class="btn" href="/signup">Sign Up</a>
+    </nav>
+  </header>
+
+  <main class="grid">
+    <!-- 1) Emergency (911) -->
+    <!-- On mobile, tel:911 opens the dialer. Keep confirm to avoid accidental taps. -->
+    <a class="tile danger" href="tel:911" onclick="return confirm('Call 911?');">
+      <div class="icon">📞</div>
+      <div class="title">Emergency (911)</div>
+      <div class="muted">Opens your phone dialer</div>
+    </a>
+
+    <!-- 2) Call / Video -->
+    <div class="tile" onclick="toggle('callPanel')">
+      <div class="icon">📹</div>
+      <div class="title">Call / Video</div>
+      <div class="muted">Call a saved contact or open a video link</div>
+    </div>
+
+    <!-- 3) News & Entertainment -->
+    <div class="tile" onclick="toggle('mediaPanel')">
+      <div class="icon">📰</div>
+      <div class="title">News & Entertainment</div>
+      <div class="muted">Open trusted news and video sites</div>
+    </div>
+  </main>
+
+  <!-- Panels (simple demo lists; replace with server-rendered lists later) -->
+  <section id="callPanel" class="panel">
+    <h2>Contacts</h2>
+    <ul class="list" id="contactList">
+      <!-- Demo items; you can replace with your dynamic data -->
+      <li>
+        <strong>Daughter</strong>
+        <span>
+          <a class="btn primary" href="tel:+15551234567">Call</a>
+          <a class="btn" target="_blank" href="https://meet.google.com/abc-xyz">Video</a>
+        </span>
+      </li>
+      <li>
+        <strong>Family Doctor</strong>
+        <span>
+          <a class="btn primary" href="tel:+15551112222">Call</a>
+          <a class="btn" target="_blank" href="https://zoom.us/j/123456789">Video</a>
+        </span>
+      </li>
+    </ul>
+    <p class="muted">Tip: on a real phone, <code>tel:+1...</code> opens the dialer.</p>
+  </section>
+
+  <section id="mediaPanel" class="panel">
+    <h2>News & Entertainment</h2>
+    <ul class="list" id="mediaList">
+      <!-- Demo items; you can replace with your dynamic data -->
+      <li>
+        <strong>BBC News</strong>
+        <span><a class="btn primary" target="_blank" href="https://www.bbc.com/news">Open</a></span>
+      </li>
+      <li>
+        <strong>YouTube</strong>
+        <span><a class="btn primary" target="_blank" href="https://youtube.com">Open</a></span>
+      </li>
+      <li>
+        <strong>Local News</strong>
+        <span><a class="btn primary" target="_blank" href="https://www.usatoday.com/news/local/">Open</a></span>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    Buddy • One‑tap access to help, calling, and information
+  </footer>
+
+  <script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('open');
+      // Close the other panel for cleanliness
+      if (id === 'callPanel') document.getElementById('mediaPanel').classList.remove('open');
+      if (id === 'mediaPanel') document.getElementById('callPanel').classList.remove('open');
+    }
+    // Close panels when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.tile') && !e.target.closest('.panel')) {
+        document.getElementById('callPanel').classList.remove('open');
+        document.getElementById('mediaPanel').classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>
